@@ -8,6 +8,6 @@ for i in range(sys.maxsize):
   m = hashlib.md5()
   m.update(data)
   hash_val = m.hexdigest()
-  if hash_val[:5] == '00000':
+  if hash_val[:6] == '000000':
     print(i)
     sys.exit(0)
