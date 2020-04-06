@@ -14,7 +14,8 @@ struct Coordinate {
   bool operator==(const Coordinate& c) const
   {
     return (this->x == c.x) && (this->y == c.y);
-  } };
+  } 
+};
 
 class CoordinateHashFunc {
 public:
