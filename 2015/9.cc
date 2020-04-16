@@ -40,19 +40,23 @@ int main()
     std::smatch matches;
     std::regex_search(line, matches, rx);
 
-    city_names.insert(matches[1].str());
-    city_names.insert(matches[2].str());
+    auto from = matches[1].str();
+    auto to = matches[2].str();
+
+    city_names.insert(from);
+    city_names.insert(to);
 
     int dist = std::stoi(matches[3].str());
-    auto road1 = std::make_tuple(matches[2].str(), dist);
-    city_graph[matches[1].str()].push_back(road1);
+    auto road1 = std::make_tuple(to, dist);
+    city_graph[from].push_back(road1);
 
-    auto road2 = std::make_tuple(matches[1].str(), dist);
-    city_graph[matches[2].str()].push_back(road2);
+    auto road2 = std::make_tuple(from, dist);
+    city_graph[to].push_back(road2);
   }
 
   // Try all possible routes (input is small enough, only 7!)
   std::cout << "Number of cities: " << city_names.size() << "\n";
+
   //int min_dist = std::numeric_limits<int>::max();
   int max_dist = std::numeric_limits<int>::min();
   std::vector<std::string> city_names_v(city_names.begin(), city_names.end());
