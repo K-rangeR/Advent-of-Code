@@ -53,17 +53,20 @@ int main()
 
   // Try all possible routes (input is small enough, only 7!)
   std::cout << "Number of cities: " << city_names.size() << "\n";
-  int min_dist = std::numeric_limits<int>::max();
+  //int min_dist = std::numeric_limits<int>::max();
+  int max_dist = std::numeric_limits<int>::min();
   std::vector<std::string> city_names_v(city_names.begin(), city_names.end());
   do {
     int curr_dist = 0;
     for (int i = 0; i < city_names_v.size()-1; ++i) {
       curr_dist += get_dist(city_graph, city_names_v[i], city_names_v[i+1]);
     }
-    min_dist = std::min(min_dist, curr_dist);
+    //min_dist = std::min(min_dist, curr_dist);
+    max_dist = std::max(max_dist, curr_dist);
   } while (std::next_permutation(city_names_v.begin(), city_names_v.end()));
 
-  std::cout << "Shortest distance is: " << min_dist << "\n";
+  //std::cout << "Shortest distance is: " << min_dist << "\n";
+  std::cout << "Longest distance is: " << max_dist << "\n";
 
   input.close();
   return 0;
