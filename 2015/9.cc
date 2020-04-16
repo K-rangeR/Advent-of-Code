@@ -10,7 +10,8 @@
 
 using namespace std;
 
-int get_dist(unordered_map<string, vector<tuple<string,int>>>& graph, const string& from,
+int get_dist(unordered_map<string, vector<tuple<string,int>>>& graph, 
+             const string& from,
              const string& to)
 {
   auto roads_out = graph[from];
