@@ -38,7 +38,7 @@ std::string look_and_say_ith(int i, std::string& prev)
 int main()
 {
   std::string input = "3113322113";
-  std::string result = look_and_say_ith(40, input);
+  std::string result = look_and_say_ith(50, input); // 40 part 1, 50 part 2
   std::cout << "Answer: " << result.length() << "\n";
 
   return 0;
