@@ -1,8 +1,9 @@
-// TODO: not complete!!!
+// TODO: not complete
 #include <iostream>
 #include <fstream>
+#include <unordered_map>
 #include <vector>
-#include <string>
+#include <regex>
 
 int main()
 {
@@ -11,6 +12,10 @@ int main()
     std::cout << "Could not open input file\n";
     return 1;
   }
+
+  std::regex assign("(\\w+) -> (\\w+)");
+  std::regex binary("(\\w+) (AND|OR|LSHIFT|RSHIFT) (\\w+) -> (\\w+)");
+  std::regex not_pattern("NOT (\\w+) -> (\\w+)");
   
   std::string line;
   while (std::getline(input, line)) {
