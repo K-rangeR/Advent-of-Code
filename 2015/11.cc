@@ -60,7 +60,7 @@ std::string get_next_pwd(std::string pwd)
 
 int main()
 {
-  std::string curr_pwd = "hepxcrrq";
+  std::string curr_pwd = "hepxxzaa";
   while (curr_pwd != "zzzzzzzz") {
     bool rule1 = meets_rule_one(curr_pwd);
     bool rule2 = meets_rule_two(curr_pwd);
