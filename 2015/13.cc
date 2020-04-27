@@ -54,7 +54,7 @@ int main()
     std::regex_match(line, args, input_pattern);
     people.insert(args[1]);
     arrangements[args[1]][args[4]] = (args[2] == "gain") ? stoi(args[3])
-                                                          : -1 * stoi(args[3]);
+                                                         : -1 * stoi(args[3]);
   }
 
   vector<string> people_v {people.begin(), people.end()};
