@@ -39,13 +39,18 @@ int main()
       auto compound = target_sue.find(*token);
       if (compound != target_sue.end()) {
         int val = std::stoi(*(token+1));
-        matching_count += (compound->second == val) ? 1 : 0;       
+        if (*token == "cats" || *token == "trees") {
+          matching_count += (val > compound->second) ? 1 : 0; 
+        } else if (*token == "pomeranians" || *token == "goldfish") {
+          matching_count += (val < compound->second) ? 1 : 0; 
+        } else {
+          matching_count += (compound->second == val) ? 1 : 0;  
+        }
       } else {
         std::cout << "Could not find that compound: " << *token << "\n";
       }
     }
     sue_correct_count.push_back(matching_count);
-    std::cout << matching_count << "\n";
   }
 
   int idx = 0;
