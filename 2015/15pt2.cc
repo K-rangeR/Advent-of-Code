@@ -2,7 +2,6 @@
 #include <fstream>
 #include <regex>
 #include <vector>
-#include <unordered_map>
 #include <numeric>
 
 int calc_score(int a, int b, int c, int d, const std::vector<int>& data)
@@ -27,7 +26,6 @@ int main()
     "(\\w+): \\w+ (-?\\d+), \\w+ (-?\\d+), \\w+ (-?\\d+), \\w+ (-?\\d+), \\w+ (-?\\d+)"
   );
 
-  std::unordered_map<std::string, std::vector<int>> data {};
   std::vector<int> capacities {};
   std::vector<int> durabilities {};
   std::vector<int> flavors {};
@@ -64,9 +62,7 @@ int main()
         }
 
         int curr_score = 1;
-        for (int res : results) { 
-          curr_score *= res; 
-        }
+        for (int res : results) { curr_score *= res; }
         curr_max_score = std::max(curr_score, curr_max_score);
         results.clear();
       }
