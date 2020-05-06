@@ -35,8 +35,22 @@ int count_on_lights(const vector<vector<char>>& lights) {
   return on;
 }
 
+bool corner(int r, int c) {
+  if (r == 1 && (c == 1 || c == WIDTH)) {
+    return true;
+  }
+  if (r == WIDTH && (c == 1 || c == WIDTH)) {
+    return true;
+  }
+  return false;
+}
+
 
 char change_light_to(int r, int c, vector<vector<char>>& lights) {
+  if (corner(r, c)) {
+    return '#'; // stuck on
+  }
+
   int neighbors_on = 0;
   for (int i = r-1; i <= r+1; ++i) {
     for (int j = c-1; j <= c+1; ++j) {
@@ -103,6 +117,12 @@ int main() {
   }
 
   lights.push_back({padding.begin(), padding.end()});
+
+  // Turn on the four corners (part #2)
+  lights[1][1] = '#';
+  lights[1][WIDTH] = '#';
+  lights[WIDTH][1] = '#';
+  lights[WIDTH][WIDTH] = '#';
 
   int answer = get_answer(lights);
   std::cout << "Answer: " << answer << "\n";
