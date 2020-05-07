@@ -68,5 +68,7 @@ with open('07_input.txt') as circuit_input:
     if match:
       circuit[match.group(2)] = [None, 'NOT', match.group(1)]
 
+circuit['b'][0] = '956' # part 2
+
 answer = solve_for('a', circuit)
 print('Answer:', answer)
