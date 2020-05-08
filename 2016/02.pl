@@ -4,8 +4,19 @@ use warnings;
 
 open(my $input, '<', '02_input.txt') or die 'Cannot open input file';
 
-my @pad = ([1,2,3],[4,5,6],[7,8,9]);
-my @num_at = (1,1); # 5
+my @pad = (
+  [0, 0, 1, 0, 0],
+  [0, 2, 3, 4, 0],
+  [5, 6, 7, 8, 9],
+  [0,10, 11,12,0],
+  [0, 0, 13, 0, 0]
+);
+
+my %map = (10 => 'A', 11 => 'B', 12 => 'C', 13 => 'D');
+
+my $row = 2;
+my $column = 0;
+
 my @code = ();
 
 my @instrs;
@@ -19,16 +30,24 @@ close $input;
 for my $instr (@instrs) {
   for my $char (split //, $instr) {
     if ($char eq "U") {
-      $num_at[0] = ($num_at[0] != 0) ? $num_at[0]-1 : 0
+      $row = ($row != 0 and $pad[$row-1][$column] != 0) ? $row-1 : $row;
     } elsif ($char eq "D") {
-      $num_at[0] = ($num_at[0] != 2) ? $num_at[0]+1 : 2
+      $row = ($row != 4 and $pad[$row+1][$column] != 0) ? $row+1 : $row;
     } elsif ($char eq "R") {
-      $num_at[1] = ($num_at[1] != 2) ? $num_at[1]+1 : 2
+      $column = ($column != 4 and $pad[$row][$column+1] != 0) ? $column+1 : $column;
     } elsif ($char eq "L") {
-      $num_at[1] = ($num_at[1] != 0) ? $num_at[1]-1 : 0
+      $column = ($column != 0 and $pad[$row][$column-1] != 0) ? $column-1 : $column;
     }
   }
-  push @code, $pad[$num_at[0]][$num_at[1]];
+
+  my $result = 0;
+  if ($pad[$row][$column] >= 1 and $pad[$row][$column] <= 9) {
+    $result = $pad[$row][$column];
+  } else {
+    $result = $map{$pad[$row][$column]};
+  }
+
+  push @code, $result;
 }
 
 print(join("", @code));
