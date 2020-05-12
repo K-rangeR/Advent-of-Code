@@ -4,23 +4,32 @@ use warnings;
 
 open my $input, "<", "07_input.txt" or die "Can't open input file";
 
-my $count = 1;
+my $count = 0;
 while (my $line = <$input>) {
   chomp $line;
   my @tokens = split /\[|\]/, $line;
-  my $in_hyper = 0;
-  my $found = 0;
+
+  my @supernet = ();
+  my @hypernet = ();
   for (my $i = 0; $i < @tokens; $i++) {
-    if ($tokens[$i] =~ /(\w)(\w)\2\1/ and $i % 2 != 0) {
-      $in_hyper = 1;
-    } elsif ($tokens[$i] =~ /(\w)\1\1\1/) {
-      print "double\n";
-    } elsif ($tokens[$i] =~ /(\w)(\w)\2\1/ and $i % 2 == 0) {
-      $found = 1;
+    my $token = $tokens[$i];
+    for (my $j = 0; $j <= length($token)-3; $j++) {
+      my ($a, $b, $c) = split(//, substr($token, $j, 3));
+      if ($a ne $b and $a eq $c) {
+        if ($i % 2 == 0) {
+          @supernet = ($a, $b); 
+        } else {
+          @hypernet = ($a, $b);
+        }
+      }
     }
-  }
-  if ($found and not $in_hyper) {
-    $count++;
+    if (@supernet and @hypernet) {
+      if ($supernet[0] eq $hypernet[1] and $supernet[1] eq $hypernet[0]) {
+        $count++;
+        @supernet = ();
+        @hypernet = ();
+      }
+    }
   }
 }
 
