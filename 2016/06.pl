@@ -16,7 +16,7 @@ while (my $line = <$input>) {
 my $answer = "";
 foreach my $hash (@char_count) {
   my %hash = %$hash;
-  my $most_frequent = (sort {$hash{$b} <=> $hash{$a}} keys %hash)[0];
+  my $most_frequent = (sort {$hash{$a} <=> $hash{$b}} keys %hash)[0];
   $answer .= $most_frequent;
 }
 
