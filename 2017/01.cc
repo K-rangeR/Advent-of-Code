@@ -5,18 +5,12 @@
 int solve_captcha(const std::string& num)
 {
   int sum = 0;
-  for (int i = 0; i < num.length(); ++i) {
-    if (num[i] == num[((i+1) % num.length())]) {
+  int len = num.length();
+  for (int i = 0; i < len; ++i) {
+    if (num[i] == num[((i+1) % len)]) {
       sum += num[i] - '0';
     }
   }
-
-  /*
-  if (num[0] == num[num.length()-1]) {
-      sum += num[0] - '0';
-  }
-  */
-
   return sum;
 }
 
