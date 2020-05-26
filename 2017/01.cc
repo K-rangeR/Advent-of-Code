@@ -1,19 +1,35 @@
 #include <iostream>
 #include <fstream>
 
+// Part 1
 int solve_captcha(const std::string& num)
 {
   int sum = 0;
-  for (int i = 0; i < num.length()-1; i++) {
-    if (num[i] == num[i+1]) {
+  for (int i = 0; i < num.length(); ++i) {
+    if (num[i] == num[((i+1) % num.length())]) {
       sum += num[i] - '0';
     }
   }
 
+  /*
   if (num[0] == num[num.length()-1]) {
       sum += num[0] - '0';
   }
+  */
 
+  return sum;
+}
+
+// Part 2
+int solve_captcha_two(const std::string& num)
+{
+  int sum = 0, len = num.length();
+  int steps = len / 2;
+  for (int i = 0; i < len; ++i) {
+    if (num[i] == num[((i + steps) % len)]) {
+      sum += num[i] - '0';
+    }
+  }
   return sum;
 }
 
