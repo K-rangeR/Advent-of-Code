@@ -32,6 +32,31 @@ int calc_checksum(const std::vector<std::string>& table)
   return checksum;
 }
 
+int div_pair(const std::vector<int>& row)
+{
+  int sum = 0;
+  for (int i = 0; i < row.size(); ++i) {
+    for (int j = 0; j < row.size(); ++j) {
+      if ((i != j) && (row[i] % row[j] == 0)) {
+        sum += row[i] / row[j]; 
+        break;
+      }
+    }
+  }
+  return sum;
+}
+
+// Part 2
+int calc_checksum_two(const std::vector<std::string>& table)
+{
+  int checksum = 0;
+  for (auto r : table) {
+    auto row = split(r);    
+    checksum += div_pair(row);
+  }
+  return checksum;
+}
+
 int main()
 {
   std::ifstream input("02_input.txt");
@@ -46,7 +71,7 @@ int main()
     table.push_back(line);  
   }
 
-  int checksum = calc_checksum(table);
+  int checksum = calc_checksum_two(table);
   std::cout << "Answer: " << checksum << "\n";
 
   input.close();
