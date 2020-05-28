@@ -44,8 +44,8 @@ COST_IDX = 0
 DMG_IDX = 1
 AMR_IDX = 2
 
+# part 1
 min_gold_spent = math.inf
-
 for weapon in weapons:
   for armor in armors:
     for lh, rh in itertools.combinations(rings, 2):
@@ -56,3 +56,16 @@ for weapon in weapons:
         min_gold_spent = min(min_gold_spent, cost)
 
 print('Min gold spent:', min_gold_spent)
+
+# part 2
+max_gold_spent = -1
+for weapon in weapons:
+  for armor in armors:
+    for lh, rh in itertools.combinations(rings, 2):
+      cost = weapon[COST_IDX] + armor[COST_IDX] + lh[COST_IDX] + rh[COST_IDX]
+      damage = weapon[DMG_IDX] + lh[DMG_IDX] + rh[DMG_IDX]
+      protection = armor[AMR_IDX] + lh[AMR_IDX] + rh[AMR_IDX]
+      if not fight(100, damage, protection):
+        max_gold_spent = max(max_gold_spent, cost)
+
+print('Max gold spent:', max_gold_spent)
