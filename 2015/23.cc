@@ -7,9 +7,9 @@
 
 struct Cpu {
   int ip; 
-  std::unordered_map<std::string, int> registers;
+  std::unordered_map<std::string, unsigned int> registers;
 
-  Cpu() : ip(0), registers{{"a",0}, {"b",0}} {}
+  Cpu() : ip(0), registers{{"a",1}, {"b",0}} {}
 };
 
 std::regex offset_pattern("(\\+|\\-)(\\d+)");
@@ -40,7 +40,7 @@ void exe_inc(Cpu& cpu, const std::string& reg) {
     std::cerr << "[inc] Unknown register " << reg << "\n";
     exit(1);
   }
-  cpu.registers[reg] += 1;
+  cpu.registers[reg]++;
   cpu.ip++;
 }
 
