@@ -148,12 +148,6 @@ int main() {
       std::cerr << "Unknown opcode: " << opcode << "\n";
       exit(1);
     }
-    
-    /*
-    std::cout << "ip: " << cpu.ip
-              << " a: " << cpu.registers["a"]
-              << " b: " << cpu.registers["b"] << "\n";
-    */
   }
 
   std::cout << "Answer: " << cpu.registers["b"] << "\n";
