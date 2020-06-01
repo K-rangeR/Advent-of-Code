@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-open(my $input_file, "<", "1_input.txt") or die "Can't open input file\n";
+open(my $input_file, "<", "01_input.txt") or die "Can't open input file\n";
 
 my %start = (x => 0, y => 0);
 my %end = (x => 0, y => 0);
