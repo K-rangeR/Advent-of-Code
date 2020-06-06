@@ -4,10 +4,6 @@ import sys
 import operator
 from collections import defaultdict
 
-# 1. sort input
-# 2. find the guard who was asleep the most
-# 3. find which minute they were asleep the most
-# ID => [(sleep_at, wake_up_at), (...), (...)]
 
 class Guard:
   def __init__(self, ID):
