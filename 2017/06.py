@@ -19,16 +19,16 @@ def redistribute_blocks(banks, from_block):
 
 banks = open('06_input.txt', 'r').read().strip().split('\t')
 banks = [int(i) for i in banks]
-mem_states = {tuple(banks):True}
-cycles = 0
+mem_states = {tuple(banks):0}
+cycle = 0
 
 while True:
-  cycles += 1
+  cycle += 1
   index = get_max_bank_index(banks)
   redistribute_blocks(banks, index)
   if tuple(banks) in mem_states:
     break
   else:
-    mem_states[tuple(banks)] = True
+    mem_states[tuple(banks)] = cycle
 
-print('Answer:', cycles)
+print('Answer:', (cycle - mem_states[tuple(banks)]))
