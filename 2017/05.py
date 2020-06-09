@@ -5,7 +5,7 @@ data = [int(i) for i in data]
 offset, steps = 0, 0
 while offset < len(data):
   jump = data[offset]
-  data[offset] += 1
+  data[offset] += 1 if jump < 3 else -1
   offset += jump
   steps += 1
 
