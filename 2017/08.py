@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from collections import defaultdict
 import sys
+import math
 
 
 def cond_true(operand1, operator, operand2):
@@ -33,6 +34,7 @@ def exe_instr(operand1, intr_name, operand2):
 
 
 registers = defaultdict(lambda: 0, defaultdict(int))
+highest_val = -math.inf
 with open('08_input.txt', 'r') as f:
   for line in f:
     instr = line.strip().split()
@@ -40,6 +42,8 @@ with open('08_input.txt', 'r') as f:
     if cond_true(operand1, operator, int(operand2)):
       instr_o1, instr_name, instr_o2 = instr[:3] 
       exe_instr(instr_o1, instr_name, int(instr_o2)) 
+      highest_val = max(highest_val, max(registers.values()))
 
 answer = max(registers.values())
-print('Answer:', answer)
+print('Answer part #1:', answer)
+print('Answer part #2:', highest_val)
