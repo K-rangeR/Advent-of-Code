@@ -10,11 +10,26 @@ def main():
       node = int(tokens[0])
       neighbors = [int(token.strip(',')) for token in tokens[2:]]
       graph[node] = neighbors
-  contains_id_zero(graph, 0, {})
-  print('Answer:', pt1_count)
+
+  part_1(graph)
+  part_2(graph)
 
 
-def contains_id_zero(graph, curr_node, visited):
+def part_1(graph):
+  contains_id(graph, 0, {})
+  print('Answer part 1:', pt1_count)
+
+
+def part_2(graph):
+  connected_components, visited = 0, {}
+  for node in graph.keys():
+    if node not in visited:
+      contains_id(graph, node, visited) 
+      connected_components += 1
+  print('Answer part 2:', connected_components)
+
+
+def contains_id(graph, curr_node, visited):
   if curr_node in visited:
     return
 
@@ -22,7 +37,7 @@ def contains_id_zero(graph, curr_node, visited):
   pt1_count += 1
   visited[curr_node] = True
   for neighbor in graph[curr_node]:
-    contains_id_zero(graph, neighbor, visited)
+    contains_id(graph, neighbor, visited)
     visited[neighbor] = True
 
 
