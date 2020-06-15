@@ -25,6 +25,12 @@ class Wall:
     self.at += 1 if self.going_up else -1
     self.ls[self.at] = 'S'
 
+  def reset(self):
+    if self.range_num != -1:
+      self.ls[self.at] = ''
+      self.at = 0
+      self.ls[self.at] = 'S'
+
 
 def main():
   layers = list()
@@ -38,6 +44,11 @@ def main():
         layers.append(Wall(i, -1))
       layers.append(Wall(depth, range_num))
 
+  part_1(layers)
+  part_2()
+
+
+def part_1(layers):
   total_severity = 0
   depth_at = 0
   while depth_at < len(layers):
@@ -47,7 +58,7 @@ def main():
     scan(layers)
 
   print('Answer:', total_severity)
-    
+
 
 def caught(depth_at, layers):
   return layers[depth_at].ls[0] == 'S'
@@ -56,6 +67,28 @@ def caught(depth_at, layers):
 def scan(layers):
   for wall in layers:
     wall.move()
+
+
+def part_2():
+  layers = []
+  with open('13_input.txt', 'r') as input_file:
+    for line in input_file:
+      depth, range_num = line.strip().split(':')
+      depth, range_num = int(depth), int(range_num)
+      layers.append((depth, range_num))
+
+  delay = 0
+  while not all_of(delay, layers):
+    delay += 1
+
+  print('Answer part 2:', delay)
+
+
+def all_of(delay, layers):
+  for layer in layers:
+    if ((delay + layer[0]) % (2 * layer[1] - 2)) == 0:
+      return False
+  return True
 
 
 if __name__ == '__main__':
