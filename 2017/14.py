@@ -4,15 +4,26 @@ from functools import reduce
 
 def main():
   key = 'hwlqcszp'
-  used_count = 0
+  ones = []
   for i in range(128):
     digest = knot_hash(key + '-' + str(i))
     digest_bin = [bin(int(hex_digit, 16))[2:].zfill(4) for hex_digit in digest]
     digest_bin = ''.join(digest_bin)
-    used_count += digest_bin.count('1')
-  print('Used:', used_count)
+    ones.extend([(i, j) for (j, bit) in enumerate(digest_bin) if bit == '1'])
+  print('Part #1:', len(ones))
 
+  regions = 0
+  while ones:
+    q = [ones[0]]
+    while q:
+      (x, y) = q.pop()
+      if (x, y) in ones:
+        ones.remove((x,y))
+        q.extend([(x-1,y), (x+1,y), (x,y-1), (x,y+1)])
+    regions += 1
+  print('Part #2:', regions)
 
+  
 def knot_hash(val):
   lengths = [ord(letter) for letter in val]
   lengths.extend([17, 31, 73, 47, 23])
@@ -32,7 +43,7 @@ def knot_hash(val):
 
   knot_hash = ''
   for block in blocks:
-    knot_hash += hex(block)[2:]
+    knot_hash += hex(block)[2:].zfill(2)
 
   return knot_hash
 
