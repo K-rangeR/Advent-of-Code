@@ -10,22 +10,27 @@ spin_pattern = re.compile(r's(\d+)')
 exchange_pattern = re.compile(r'x(\d+)/(\d+)')
 partner_pattern = re.compile(r'p([a-p]+)/([a-p]+)')
 
-for move in moves:
-  match = spin_pattern.match(move)
-  if match:
-    n = int(match.group(1))
-    last_n = places[-n:]
-    places = last_n + places
-    del places[-n:]
+seen = []
+for i in range(1000000000):
+  curr_pos = ''.join(places)
+  if curr_pos in seen:
+    print(seen[1000000000 % i])  # will find a repeating dance position
+    break
 
-  match = exchange_pattern.match(move)
-  if match:
-    a, b = int(match.group(1)), int(match.group(2))
-    places[a], places[b] = places[b], places[a]
-    
-  match = partner_pattern.match(move)
-  if match:
-    a, b = places.index(match.group(1)), places.index(match.group(2))
-    places[a], places[b] = places[b], places[a]
-    
-print(''.join(places))
+  seen.append(curr_pos)
+
+  for move in moves:
+    match = spin_pattern.match(move)
+    if match:
+      n = int(match.group(1))
+      places = places[-n:] + places[:-n]
+
+    match = exchange_pattern.match(move)
+    if match:
+      a, b = int(match.group(1)), int(match.group(2))
+      places[a], places[b] = places[b], places[a]
+      
+    match = partner_pattern.match(move)
+    if match:
+      a, b = places.index(match.group(1)), places.index(match.group(2))
+      places[a], places[b] = places[b], places[a]
