@@ -25,7 +25,7 @@ def main():
   start_row, start_col = 0, grid[0].index('|')
   direction = Direction.SOUTH
   position = Pos(start_row, start_col)
-  answer = ''
+  answer, steps = '', 0
 
   while moveable(position, grid):
     at = grid[position.row][position.col]
@@ -33,9 +33,11 @@ def main():
       answer += at
     elif at == '+':
       direction = change_dir(position, direction, grid)
+    steps += 1
     move(direction, position)
 
   print('Answer:', answer)
+  print('Steps:', steps)
 
 
 def moveable(pos, grid):
