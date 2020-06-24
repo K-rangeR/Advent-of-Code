@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import math
+from collections import defaultdict
 
 
 class Particle:
@@ -10,18 +11,17 @@ class Particle:
     self.acceleration = acceleration
 
   def update_position(self):
-    for i in range(len(self.pos)):
-      self.pos[i] += self.velocity[i] 
+    self.pos[0] += self.velocity[0]
+    self.pos[1] += self.velocity[1]
+    self.pos[2] += self.velocity[2]
 
   def update_velocity(self):
-    for i in range(len(self.velocity)):
-      self.velocity[i] += self.acceleration[i]
+    self.velocity[0] += self.acceleration[0]
+    self.velocity[1] += self.acceleration[1]
+    self.velocity[2] += self.acceleration[2]
 
   def manhattan_dist_from_origin(self):
-    dist = 0
-    for position in self.pos:
-      dist += abs(position)
-    return dist
+    return abs(self.pos[0]) + abs(self.pos[1]) + abs(self.pos[2])
 
 
 def main():
@@ -36,7 +36,13 @@ def main():
       particles.append(Particle(id_count, pos, vel, acc))
       id_count += 1
   
-  part1(particles)
+  #part1(particles)
+  part2(particles)
+
+
+def parse_parameter(parameter):
+  open_brace, close_brace = parameter.index('<')+1, parameter.index('>')
+  return list(map(int, parameter[open_brace:close_brace].split(',')))
 
 
 def part1(particles):
@@ -48,13 +54,26 @@ def part1(particles):
       dists[particle.id] = particle.manhattan_dist_from_origin()
 
   print('Answer part #1:', dists.index(min(dists)))
-  
 
 
-def parse_parameter(parameter):
-  open_brace, close_brace = parameter.index('<')+1, parameter.index('>')
-  return list(map(int, parameter[open_brace:close_brace].split(',')))
+def part2(particles):
+  particles = {particle.id:particle for particle in particles}
+  particles_at = defaultdict(list)
+  for i in range(500):
+    for particle in particles.values():
+      particle.update_velocity()
+      particle.update_position()
+      position_tuple = tuple(particle.pos)
+      particles_at[position_tuple].append(particle.id)
 
+    for (pos, particle_ids) in particles_at.items():
+      if len(particle_ids) > 1:
+        for particle_id in particle_ids:
+          del particles[particle_id]
+      particles_at[pos].clear()
+
+    print('len:', len(particles))
+      
 
 if __name__ == '__main__':
   main()
