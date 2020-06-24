@@ -35,15 +35,20 @@ def main():
       acc = parse_parameter(parameters[2])
       particles.append(Particle(id_count, pos, vel, acc))
       id_count += 1
+  
+  part1(particles)
 
+
+def part1(particles):
   dists = [0 for i in range(len(particles))]
-  for i in range(5000):
+  for i in range(1000):
     for particle in particles:
       particle.update_velocity()
       particle.update_position()
       dists[particle.id] = particle.manhattan_dist_from_origin()
 
   print('Answer part #1:', dists.index(min(dists)))
+  
 
 
 def parse_parameter(parameter):
