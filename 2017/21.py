@@ -9,11 +9,12 @@ def main():
   rules = expand_rules(lines)
   art = to_pixel('.#./..#/###')
   for i in range(5):
+    print_art(art)
     print('width:', len(art[0]), 'height:', len(art))
     size = len(art[0])
     d = (2 if size % 2 == 0 else 3)
     partitions = partition(art, d)
-    art = apply_rules(partitions, rules, d)
+    art = apply_rules(art, partitions, rules, d)
     print()
 
   print('Answer:', light_on_count(art))
@@ -57,16 +58,21 @@ def partition(art, d):
   return tuple(res)
 
 
-def apply_rules(partitions, rules, d):
+def apply_rules(art, partitions, rules, d):
   output = tuple(rules[partition] for partition in partitions)
   print('boxes:', len(partitions), 'box width:', len(partitions[0]), 'd:', d)
-  boxes = max(1, len(partitions) // d)
+  height_in_boxes = len(art) // d
+  print('height in boxes:', height_in_boxes)
+  for a in output:
+    print(a)
   expand_map = {2:3, 3:4}
   new_art = []
-  for rows in range(boxes):
+  for rows in range(0, len(partitions), height_in_boxes): # height_in_boxes
+    #print(rows)
     for i in range(expand_map[d]):
       tmp = []
-      for j in range(boxes):
+      for j in range(rows, rows+height_in_boxes):
+        #print('j', j, 'i', i)
         tmp.extend(output[j][i])
       new_art.append(tuple(tmp))
   return tuple(new_art)
@@ -82,7 +88,6 @@ def light_on_count(art):
 def print_art(art):
   for row in art:
     print(row)
-  print()
 
 
 if __name__ == '__main__':
