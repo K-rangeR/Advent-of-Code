@@ -8,14 +8,14 @@ def main():
 
   rules = expand_rules(lines)
   art = to_pixel('.#./..#/###')
-  for i in range(5):
-    print_art(art)
-    print('width:', len(art[0]), 'height:', len(art))
+  for i in range(18):
+    #print_art(art)
+    #print('width:', len(art[0]), 'height:', len(art))
     size = len(art[0])
     d = (2 if size % 2 == 0 else 3)
     partitions = partition(art, d)
     art = apply_rules(art, partitions, rules, d)
-    print()
+    #print()
 
   print('Answer:', light_on_count(art))
 
@@ -60,11 +60,13 @@ def partition(art, d):
 
 def apply_rules(art, partitions, rules, d):
   output = tuple(rules[partition] for partition in partitions)
-  print('boxes:', len(partitions), 'box width:', len(partitions[0]), 'd:', d)
+  #print('boxes:', len(partitions), 'box width:', len(partitions[0]), 'd:', d)
   height_in_boxes = len(art) // d
-  print('height in boxes:', height_in_boxes)
+  #print('height in boxes:', height_in_boxes)
+  '''
   for a in output:
     print(a)
+  '''
   expand_map = {2:3, 3:4}
   new_art = []
   for rows in range(0, len(partitions), height_in_boxes): # height_in_boxes
