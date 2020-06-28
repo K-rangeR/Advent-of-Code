@@ -3,6 +3,11 @@ from collections import defaultdict
 
 
 def main():
+  part1()
+  part2()
+
+
+def part1():
   instrs = []
   with open('23_input.txt', 'r') as instr_file:
     for line in instr_file:
@@ -28,8 +33,19 @@ def main():
       operand1 = regs[operand1] if operand1 in regs else int(operand1)
       isp += operand2 if operand1 != 0 else 1
 
-  print('Answer:', muls)
+  print('Answer part #1:', muls)
   
+
+def part2():
+  # according to reddit
+  h = 0
+  for i in range(106700, 123701, 17):
+    for j in range(2, i):
+      if i % j == 0:
+        h += 1
+        break
+  print('Answer part #2:', h)
+
 
 def decode_operand(operand, regs):
   try:
