@@ -46,6 +46,14 @@ class VirusCarrier:
   }
 
 
+  opposite_dir = {
+    Direction.NORTH: Direction.SOUTH,
+    Direction.SOUTH: Direction.NORTH,
+    Direction.EAST: Direction.WEST,
+    Direction.WEST: Direction.EAST,
+  }
+
+
   def __init__(self, direction_facing, position, grid):
     self.direction_facing = direction_facing
     self.nodes_infected = 0
@@ -68,6 +76,8 @@ class VirusCarrier:
       self._update_dir(Turn.LEFT)
     elif self.grid[pos] == '#':
       self._update_dir(Turn.RIGHT)
+    elif self.grid[pos] == 'F':
+      self.direction_facing = VirusCarrier.opposite_dir[self.direction_facing]
 
 
   def _update_dir(self, turn):
@@ -77,9 +87,13 @@ class VirusCarrier:
   def _update_curr_node(self):
     pos = (self.position.y, self.position.x)
     if self.grid[pos] == '.':
-      self.grid[pos] = '#'
+      self.grid[pos] = 'W'
+    elif self.grid[pos] == 'W':
       self.nodes_infected += 1
-    else:
+      self.grid[pos] = '#'
+    elif self.grid[pos] == '#':
+      self.grid[pos] = 'F'
+    elif self.grid[pos] == 'F':
       self.grid[pos] = '.'
 
 
@@ -101,7 +115,7 @@ def main():
   pos = Position(start_x, start_y)
   carrier = VirusCarrier(Direction.NORTH, pos, grid)
 
-  for i in range(10000):
+  for i in range(10000000):
     carrier.burst()
 
   print(carrier.nodes_infected)
