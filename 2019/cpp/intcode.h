@@ -34,8 +34,6 @@ public:
 
   void run()
   {
-    write_to(12, 1); write_to(2,2);
-
     while (value_at(pc) != 99) {
       int opcode = value_at(pc); 
       int operand1 = decode_operand(value_at(pc+1)); 
@@ -43,9 +41,9 @@ public:
       int dest = value_at(pc+3);
 
       if (opcode == 1) {
-        write_to(operand1 + operand2, dest);
+        write_to(dest, operand1 + operand2);
       } else if (opcode == 2) {
-        write_to(operand1 * operand2, dest);
+        write_to(dest, operand1 * operand2);
       }
 
       pc += 4;
@@ -53,9 +51,9 @@ public:
   }
 
   int value_at(int index) { return code.at(index); }
+  void write_to(int index, int data) { code[index] = data; }
 
 private:
-  void write_to(int data, int index) { code[index] = data; }
   int decode_operand(int operand) { return code[operand]; }
 
 private:
