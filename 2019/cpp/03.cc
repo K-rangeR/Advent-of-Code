@@ -19,6 +19,11 @@ class LineSegment {
 public:
   LineSegment(Point one, Point two) : p1{one}, p2{two} {}
   Point intersect_at(const LineSegment& segment) const;
+  friend std::ostream& operator<<(std::ostream& out, const LineSegment& seg)
+  {
+    out << seg.p1.x << ", " << seg.p1.y << " - " << seg.p2.x << ", " << seg.p2.y;
+    return out;
+  }
 private:
   Point p1;
   Point p2;
@@ -27,13 +32,18 @@ private:
 
 class Wire {
 public:
-  Wire(int wire_id, std::vector<LineSegment> segments) 
-    : id{wire_id}, line_segments{segments}
+  Wire(std::vector<LineSegment> segments) 
+    : line_segments{segments}
   {}
-  int get_id() const { return id; }
+
+  void print_line_segments() const
+  {
+    for (auto segment : line_segments) {
+      std::cout << segment << "\n";
+    }
+  }
 
 private:
-  const int id;
   std::vector<LineSegment> line_segments;
 };
 
@@ -52,7 +62,8 @@ int main()
 
   std::string line;
   while (std::getline(input, line)) {
-    parse_input_line(line);
+    auto wire = parse_input_line(line);
+    wire.print_line_segments();
   }
 
   input.close();
@@ -68,8 +79,26 @@ Wire parse_input_line(std::string& line)
   int x = 0, y = 0;
 
   while (std::getline(stream, token, ',')) {
-    std::cout << token << "\n";
+    Point start {x, y};
+    char dir = token[0];
+    int displacement = atoi(token.c_str()+1);
+    switch (dir) {
+    case 'R':
+      x += displacement;
+      break;
+    case 'L':
+      x -= displacement;
+      break;
+    case 'D':
+      y -= displacement;
+      break;
+    case 'U':
+      y += displacement;
+      break;
+    }
+    Point end {x, y};
+    segments.push_back(LineSegment{start, end});
   }
 
-  return Wire {0, segments}; 
+  return Wire {segments}; 
 }
