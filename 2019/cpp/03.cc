@@ -19,11 +19,13 @@ class LineSegment {
 public:
   LineSegment(Point one, Point two) : p1{one}, p2{two} {}
   Point intersect_at(const LineSegment& segment) const;
+
   friend std::ostream& operator<<(std::ostream& out, const LineSegment& seg)
   {
     out << seg.p1.x << ", " << seg.p1.y << " - " << seg.p2.x << ", " << seg.p2.y;
     return out;
   }
+
 private:
   Point p1;
   Point p2;
@@ -50,6 +52,7 @@ private:
 
 // Helper functions
 Wire parse_input_line(std::string&);
+int part1(const Wire& w1, const Wire& w2);
 
 
 int main()
@@ -61,10 +64,13 @@ int main()
   }
 
   std::string line;
-  while (std::getline(input, line)) {
-    auto wire = parse_input_line(line);
-    wire.print_line_segments();
-  }
+  std::getline(input, line);
+  auto wire1 = parse_input_line(line);
+
+  std::getline(input, line);
+  auto wire2 = parse_input_line(line);
+
+  std::cout << part1(wire1, wire2) << "\n";
 
   input.close();
   return 0;
@@ -101,4 +107,10 @@ Wire parse_input_line(std::string& line)
   }
 
   return Wire {segments}; 
+}
+
+
+int part1(const Wire& w1, const Wire& w2)
+{
+  return 0;
 }
