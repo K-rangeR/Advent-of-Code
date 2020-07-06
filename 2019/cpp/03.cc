@@ -26,7 +26,7 @@ public:
     return out;
   }
 
-private:
+public:
   Point p1;
   Point p2;
 };
