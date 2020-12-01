@@ -12,6 +12,7 @@ def main():
     p2_answer = part_2(expense_report)
     print(p2_answer)
 
+
 # Just brute force it
 def part_1(report):
   for (i,expense1) in enumerate(report):
