@@ -12,6 +12,9 @@ def main():
     better_1 = part_1_better(expense_report)
     print(better_1)
 
+    other = part_1_better_2(expense_report)
+    print(other)
+
     p2_answer = part_2(expense_report)
     print(p2_answer)
 
@@ -36,6 +39,29 @@ def part_1_better(report):
     if diff in set_report:
       return expense * diff
   return -1
+
+
+# Does not use a set
+def part_1_better_2(report):
+  report.sort()
+  for expense in report:
+    diff = 2020 - expense
+    if _has_expense(report, diff):
+      return diff * expense
+  return -1
+
+
+def _has_expense(report, expense):
+  start, end = 0, len(report)
+  while start <= end:
+    mid = (start + end) // 2
+    if expense == report[mid]:
+      return True
+    elif expense < report[mid]:
+      end = mid-1
+    else:
+      start = mid+1
+  return False
     
 
 # Just brute force it again!
