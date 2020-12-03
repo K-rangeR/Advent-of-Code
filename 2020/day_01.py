@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 def main():
-  with open("./01_input.txt", "r") as f:
+  with open("./input_01.txt", "r") as f:
     expense_report = []
     for line in f:
       expense_report.append(int(line.strip()))

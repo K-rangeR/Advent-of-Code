@@ -7,7 +7,7 @@ def main():
 
 def part1():
   answer = 0
-  with open("./02_input.txt", "r") as f:
+  with open("./input_02.txt", "r") as f:
     for line in f:
       tokens = line.strip().split(" ")
       nrange = tokens[0].split("-")

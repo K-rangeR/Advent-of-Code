@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 def main():
-  with open("./03_input.txt", "r") as f:
+  with open("./input_03.txt", "r") as f:
     data = []
     for line in f:
       data.append(line.strip())
