@@ -10,24 +10,15 @@ def main():
     print(slope(data, 1, 1) * slope(data, 3, 1) * slope(data, 5, 1) * slope(data, 7, 1) * slope(data, 1, 2))
 
 
-def slope(data, r, d):
-    c = 0
-    x, y = 0, 0
-    while True:
-      if x >= len(data):
-        break
-
-      if data[x][y] == "#":
-        c += 1
-
-      if y+r >= len(data[x]):
-        y = (y+r) % len(data[x])
-      else:
-        y += r
-
-      x += d
-
-    return c
+def slope(data, right, down):
+    res = 0
+    r, c = 0, 0
+    while (r+down) < len(data):
+      r += down
+      c = (c+right) % len(data[r])
+      if data[r][c] == "#":
+        res += 1
+    return res
 
 
 if __name__ == "__main__":
