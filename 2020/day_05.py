@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 with open("./input_05.txt", "r") as f:
+  ids = []
   max_id = -1
   for line in f:
     line = line.strip()
@@ -23,6 +24,14 @@ with open("./input_05.txt", "r") as f:
       else:
         max_col = col
 
-    max_id = max((max_seat * 8 + max_col), max_id)
+    id = max_seat * 8 + max_col
+    ids.append(id)
+    max_id = max(id, max_id)
 
 print(max_id)
+
+ids.sort()
+for a,b in zip(ids, ids[1:]):
+  if a != b-1:
+    print(a+1)
+    break
