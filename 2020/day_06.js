@@ -13,9 +13,10 @@ reader.on("line", (line) => {
   if (line.length === 0) {
     answer += set.size;
     set.clear();
+    return;
   }
 
-  line.split('').forEach((person) => set.add(person));
+  line.split('').forEach((q) => set.add(q));
 });
 
 reader.on("close", () => {
