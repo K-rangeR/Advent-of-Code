@@ -50,10 +50,18 @@ def board_has_winner(board):
 
 
 def check_for_winner(boards):
-  for board in boards:
+  for (i, board) in enumerate(boards):
     if (res := board_has_winner(board)) != -1:
-      return res
-  return -1
+      return (res, i)
+  return (-1, -1)
+
+
+def check_for_all_winners(boards):
+  winners = []
+  for (i, board) in enumerate(boards):
+    if (res := board_has_winner(board)) != -1:
+      winners.append((res, i))
+  return winners
 
 
 with open('./04_input.txt') as file:
@@ -75,9 +83,33 @@ with open('./04_input.txt') as file:
     nums = list(map(int, line.strip().split()))
     curr_board.append(list(map(lambda n: (False, n), nums)))
 
-  for num in inputNums:
-    mark_on_all(num, boards)
-    has_winner = check_for_winner(boards)
-    if has_winner != -1:
-      print(has_winner * num)
-      break
+  # part 1
+  part_one =False 
+  if part_one:
+    for num in inputNums:
+      mark_on_all(num, boards)
+      has_winner, _ = check_for_winner(boards)
+      if has_winner != -1:
+        print(has_winner * num)
+        break
+  else:
+    # part 2
+    scores = []
+    for num in inputNums:
+      mark_on_all(num, boards)
+      winners = check_for_all_winners(boards)
+      boards_to_delete = [False for i in range(len(boards))]
+      if len(winners) != 0:
+        for winner in winners:
+          score, idx = winner
+          scores.append(score * num)
+          boards_to_delete[idx] = True
+        tmp = []
+        for (i, delete) in enumerate(boards_to_delete):
+          if not delete:
+            tmp.append(boards[i])
+        boards = tmp
+        if len(boards) == 0:
+          break
+
+    print(scores[-1])
