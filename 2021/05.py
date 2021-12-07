@@ -44,7 +44,17 @@ def draw_on_board(line_segment, board):
       start_x += 1
     return greater_than_two_count
 
-  return 0
+  # diagonal
+  start_point = p1 if p1[Y] <= p2[Y] else p2
+  end_point = p1 if start_point == p2 else p2
+  x, y = start_point[X], start_point[Y]
+  change = (lambda x: x-1) if start_point[X] > end_point[X] else (lambda x: x+1)
+  while y <= end_point[Y]:
+    board[y][x] += 1
+    greater_than_two_count += 1 if board[y][x] == 2 else 0
+    y += 1
+    x = change(x)
+  return greater_than_two_count
 
 
 def split_to_int(token):
@@ -63,7 +73,6 @@ with open('./05_input.txt', 'r') as file:
 
   board = [[0 for j in range(max_y+1)] for i in range(max_x+1)]
 
-  # part 1
   answer = 0
   for line_segment in line_segments:
     answer += draw_on_board(line_segment, board)
