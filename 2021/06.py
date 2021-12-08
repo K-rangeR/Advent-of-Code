@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
 
-DAYS = 80
 test = [3,4,3,1,2]
 
-def part1(fish):
-  for day in range(DAYS):
-    tmp = []  
-    for (i, n) in enumerate(fish):
-      if n == 0:
-        tmp.append(8)
-        fish[i] = 6
-      else:
-        fish[i] -= 1
-    fish.extend(tmp)
-  print(len(fish))
+def answer(fishes, sim_to=80):
+  days = [0] * 9
+  for fish in fishes:
+    days[fish] += 1
+
+  for day in range(sim_to):
+    move = days[0]
+    for i in range(1, 9):
+      days[i-1] = days[i]
+    days[6] += move
+    days[8] = move
+
+  print(sum(days))
+
 
 with open('./06_input.txt', 'r') as file:
-  data = list(map(int, file.read().strip().split(',')))
-  part1(data)
+  one = list(map(int, file.read().strip().split(',')))
+  two = [x for x in one]
+  answer(one)
+  answer(two, 256)
