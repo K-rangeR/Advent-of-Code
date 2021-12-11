@@ -68,7 +68,7 @@ with open('09_input.txt', 'r') as file:
   print(answer)
 
   # part 2
-  heightmap = list(map(lambda row: list(row), heightmap))
+  heightmap = list(map(list, heightmap))
   top_three = part_2(heightmap, low_points)
   answer = functools.reduce(operator.mul, top_three)
   print(answer)
