@@ -63,10 +63,27 @@ def flash(energy, r, c, cache, inc):
     flash(energy, r+1, c+1, cache, True) # bottom right diagonal
 
 
-energy = read_input('./11_input.txt')
+def p1():
+  energy = read_input('./11_input.txt')
 
-answer = 0
-for i in range(100):
-  r = step(energy)
-  answer += r
-print(answer)
+  answer = 0
+  for i in range(100):
+    r = step(energy)
+    answer += r
+  print(answer)
+
+
+def p2():
+  energy = read_input('./11_input.txt')
+
+  s = 1
+  while True:
+    flashes = step(energy)
+    if flashes == 100:
+      print(s)
+      break
+    s += 1
+
+
+#p1()
+p2()
