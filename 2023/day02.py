@@ -16,6 +16,7 @@ def parse_input_line(line):
     return (game_id, map)
 
 
+part1 = False
 with open('day02-input.txt', 'r') as f:
     game_bag_state = {
         'red': 12,
@@ -27,11 +28,17 @@ with open('day02-input.txt', 'r') as f:
     for line in f:
         line = line.strip()
         (game_id, max_draws_by_color) = parse_input_line(line)
-        count = True
-        for color in max_draws_by_color.keys():
-            if max_draws_by_color[color] > game_bag_state[color]:
-                count = False
-                break
-        if count:
-            answer += game_id
+        if part1:
+            count = True
+            for color in max_draws_by_color.keys():
+                if max_draws_by_color[color] > game_bag_state[color]:
+                    count = False
+                    break
+            if count:
+                answer += game_id
+        else:
+            power = 1
+            for count in max_draws_by_color.values():
+                power *= count
+            answer += power
     print(answer)
